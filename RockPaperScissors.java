@@ -59,11 +59,12 @@ public class RockPaperScissors {
 				break;
 				
 				case "3": //see the stats
-					System.out.println("Case 3 not set up yet");
+					System.out.println("Game statistics have not been set up yet");
 				break;
 				
 				case "4": //quit
-					System.out.println("Case 4 not set up yet");
+					quitNow = "y";
+					JOptionPane.showMessageDialog(null, "OK. We can play more another time. Bye for now!", "Goodbye", JOptionPane.PLAIN_MESSAGE);
 				break;
 				
 				case "5": //boring admin stuff
@@ -76,9 +77,9 @@ public class RockPaperScissors {
 						JOptionPane.showMessageDialog(null, "Yeah, that's what I thought.\n"
 								                            + "Why would anyone want to do administrative stuff\n"
 								                            + "when there's a game ready to play?\n"
-								                            + "Right?!", "OK", JOptionPane.OK_OPTION);
+								                            + "Let's have some more fun!", "OK", JOptionPane.PLAIN_MESSAGE);
 					}
-					else {System.out.println("This hasn't been coded yet");}
+					else {System.out.println("Administrative functions have not been set up yet.");}
 				break;
 				}
 					
