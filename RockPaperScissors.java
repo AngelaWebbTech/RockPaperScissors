@@ -18,27 +18,25 @@ public class RockPaperScissors {
 		while (quitNow.equalsIgnoreCase("n")){
 			
 			//Main Menu: Rules Play History Quit Admin
-			Scanner mainMenuKeyboard = new Scanner(System.in);
 			mainMenuChoice = JOptionPane.showInputDialog(null, "What do you want to do?\n\n"
 												+ "1. See the rules.\n"
 												+ "2. Play the game.\n"
 												+ "3. See the stats.\n"
 												+ "4. Quit\n"
 												+ "5. Do boring administrative stuff.\n", "Main Menu", JOptionPane.QUESTION_MESSAGE);
-			//mainMenuChoice = mainMenuKeyboard.nextLine();		
-			mainMenuKeyboard.close();
 			
 			switch (mainMenuChoice) {
 			
 				case "1":
 					Scanner rulesKeyboard = new Scanner(System.in);
 					rulesYesNo = JOptionPane.showConfirmDialog(null, "RULES:\n\n"
-							+ "When asked, you will choose R, P, or S for Rock, Paper, or Scissors.\n"
-							+ "I will do the same.\n"
-							+ "Winner is determined based on the following:\n\t"
-							+ "Rock beats Scissors.\n\t"
-							+ "Scissors beats Paper.\n\t"
-							+ "Paper beats Rock.\n\t"
+							+ "When asked, you will choose R for rock, P for paper, or S for scissors.\n"
+							+ "Use of other buttons will result in a delay of game, as well as loss of my respect.\n"
+							+ "I will also choose rock, paper, or scissors.\n\n"
+							+ "Winner is determined based on the following:\n"
+							+ "Rock beats Scissors.\n"
+							+ "Scissors beats Paper.\n"
+							+ "Paper beats Rock.\n\n"
 							+ "If we choose the same, it's a draw.\n\n"
 							+ "Do you understand and accept these rules?", "Rules", JOptionPane.YES_NO_OPTION);
 					if (rulesYesNo == JOptionPane.YES_OPTION) {
@@ -47,27 +45,39 @@ public class RockPaperScissors {
 					else {
 						playerReason = JOptionPane.showInputDialog(null, "Why do you not agree?", "Explain Please", JOptionPane.QUESTION_MESSAGE);
 						//show a "thinking screen" for 5 seconds
-						JOptionPane.showInternalMessageDialog(null, "I have considered your reason. \n\n"
-																	+ "I find your reason to be " + reasonForRejection() + ".\n"
+						JOptionPane.showInternalMessageDialog(null, "You humans are so " + reasonForRejection() + ".\n"
 																	+ "These rules have existed as long as\n"
 																	+ "there have been rocks, paper, and scissors.\n\n"
+																	+ "Your reason is rejected.\n"
 																	+ "Traditional rules remain.", "No. Just no.", rulesYesNo);
 					}
 					rulesKeyboard.close();
 					break;
 					
 				case "2":
-					System.out.println("Placeholder");
+					System.out.println("Case 2 not set up yet");
+				break;
+				
+				case "3":
+					System.out.println("Case 3 not set up yet");
+				break;
+				
+				case "4":
+					System.out.println("Case 4 not set up yet");
+				break;
+				
+				case "5":
+					System.out.println("Case 5 not set up yet");
 				break;
 				}
 					
 			}//close while quitNow.equalsIgnoreCase("n")
 		}
-public static String reasonForRejection() {
-	Random rejection = new Random();
-	int rejectionChoice = rejection.nextInt(3);
-	String[] rejectionReasons = {"annoying", "irritating", "boring", "too human"};
-	return rejectionReasons[rejectionChoice];
-}
+	public static String reasonForRejection() {
+		Random rejection = new Random();
+		int rejectionChoice = rejection.nextInt(5);
+		String[] rejectionReasons = {"annoying", "irritating", "boring", "human", "hooman", "just ... ugh!"};
+		return rejectionReasons[rejectionChoice];
+	}
 }
 
