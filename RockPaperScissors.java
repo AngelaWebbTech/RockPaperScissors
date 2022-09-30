@@ -9,7 +9,7 @@ public class RockPaperScissors {
 	public static void main(String[] args) {
 		//global variables
 		String playAgain = "y", quitNow = "n", mainMenuChoice, playerReason;
-		int rulesYesNo;
+		int rulesYesNo, adminYesNo;
 		
 		//welcome screen
 		JOptionPane.showMessageDialog(null, "Hello!\n\nWelcome to Rock, Paper, Scissors!\n\nLet's Play!");
@@ -54,20 +54,31 @@ public class RockPaperScissors {
 					rulesKeyboard.close();
 					break;
 					
-				case "2":
+				case "2": //play game
 					System.out.println("Case 2 not set up yet");
 				break;
 				
-				case "3":
+				case "3": //see the stats
 					System.out.println("Case 3 not set up yet");
 				break;
 				
-				case "4":
+				case "4": //quit
 					System.out.println("Case 4 not set up yet");
 				break;
 				
-				case "5":
-					System.out.println("Case 5 not set up yet");
+				case "5": //boring admin stuff
+					adminYesNo = JOptionPane.showConfirmDialog(null, "Seriously? \n"
+														+ "Did you seriously mean to press 5?\n"
+														+ "I mean, there's a game here to be played,\n"
+														+ "and you would rather do boring administrative stuff?\n"
+														+ "Are you serious?", "huh?", JOptionPane.YES_NO_OPTION);
+					if (adminYesNo == JOptionPane.NO_OPTION) {
+						JOptionPane.showMessageDialog(null, "Yeah, that's what I thought.\n"
+								                            + "Why would anyone want to do administrative stuff\n"
+								                            + "when there's a game ready to play?\n"
+								                            + "Right?!", "OK", JOptionPane.OK_OPTION);
+					}
+					else {System.out.println("This hasn't been coded yet");}
 				break;
 				}
 					
