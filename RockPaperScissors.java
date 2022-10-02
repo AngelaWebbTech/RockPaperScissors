@@ -1,5 +1,9 @@
 //9.29.22 add more reasons for rejection to reasonForRejection method
 //10.1.22 the winner announcement is a complete mess
+//10.2.22 keep the player's reason for disagreeing with the rules in a variable. "pc with attitude" uses it (like verification) when asking if the player wants to play again.
+//10.2.22 add "nice" and "no emotion" options for "pc attitude"
+//10.2.22 JOptionpane is temp just to get the process right - UI to be added later
+//10.2.22 currently line 23 (JOptionPane.showMessageDialog(null, "Thank you!\nNow I can get back to my data.\nGoodbye");) = add options for what Pc wants to get back to
 
 import javax.swing.JOptionPane;
 import java.util.Scanner;
@@ -9,13 +13,16 @@ public class RockPaperScissors {
 
 	public static void main(String[] args) {
 		//global variables
-		String playAgain = "y", quitNow = "n", mainMenuChoice, playerReason, playerChoice;
-		int rulesYesNo, adminYesNo, systemChoice, rounds=0, playerChoseRock=0, systemChoseRock=0, playerChosePaper=0, systemChosePaper=0, playerChoseScissors=0, systemChoseScissors=0,
-				ties=0, systemWins=0, playerWins=0;
-		char winner;
+		String playAgain = "y", quitNow = "n", mainMenuChoice;
+		int welcomeWarning, rulesYesNo, adminYesNo;
 		
 		//welcome screen
-		JOptionPane.showMessageDialog(null, "Hello!\n\nWelcome to Rock, Paper, Scissors!\n\nLet's Play!");
+		welcomeWarning = JOptionPane.showConfirmDialog(null, "Hello!\n\nWelcome to Rock, Paper, Scissors\nwith the Crabby Computer!\nI'm sometimes offensive.\nYou really ok with that?", 
+										"You really want to do this?", JOptionPane.YES_NO_OPTION);
+		if (welcomeWarning==JOptionPane.NO_OPTION) {
+			JOptionPane.showMessageDialog(null, "Thank you!\nNow I can get back to " + getBackTo() + ".\nGoodbye");
+			quitNow = "y";
+		}
 		
 		//while player does not want to quit
 		while (quitNow.equalsIgnoreCase("n")){
@@ -46,7 +53,7 @@ public class RockPaperScissors {
 						JOptionPane.showMessageDialog(null, "Awesome! Let's Play!");
 					}
 					else {
-						playerReason = JOptionPane.showInputDialog(null, "Why do you not agree?", "Explain Please", JOptionPane.QUESTION_MESSAGE);
+						JOptionPane.showInputDialog(null, "Why do you not agree?", "Explain Please", JOptionPane.QUESTION_MESSAGE);
 						//show a "thinking screen" for 5 seconds
 						JOptionPane.showInternalMessageDialog(null, "You humans are so " + reasonForRejection() + ".\n"
 																	+ "These rules have existed as long as\n"
@@ -59,91 +66,22 @@ public class RockPaperScissors {
 					
 				case "2": //play game
 					while (playAgain.equalsIgnoreCase("Y")) {
-						//accumulate number of rounds 
-						rounds++;
+						Play go = new Play();
+						//call Play class methods for playerchoice, systemChoice, and Judge
+						go.setPlayerChoice();
+						go.setSystemChoice();
+						go.Judge(go.getPlayerChoice(), go.getSystemChoice());
 						
-						//user chooses rps
-						playerChoice = JOptionPane.showInputDialog(null, "Make your choice:\n"
-																		+ "(R)ock, (P)aper, or (S)cissors?", "Choose!", JOptionPane.PLAIN_MESSAGE);
-						//if player does not choose rps, or enters more than one letter, reprompt with funny message
-						
-						//system chooses rps
-						Random systemPlay = new Random();
-						systemChoice= systemPlay.nextInt(3);
-						
-						//compare user and system choices
-						if (playerChoice.equalsIgnoreCase("R")){ //player chooses rock
-							playerChoseRock++;
-							if (systemChoice==0) { //system rock
-								systemChoseRock++;
-								winner = 't';
-								ties++;
-							}
-							else if (systemChoice==1) { //system paper
-								systemChosePaper++;
-								winner='s';
-								systemWins++;
-							}
-							else { //system scissors
-								systemChoseScissors++;
-								winner='p'; 
-								playerWins++;
-							}
-						}
-						else if (playerChoice.equalsIgnoreCase("P")){ //player chooses paper
-							playerChosePaper++;
-							if (systemChoice==0) { //system rock
-								systemChoseRock++;
-								winner = 'p';
-							}
-							else if (systemChoice==1) { //system paper
-								systemChosePaper++;
-								winner='t';
-								ties++;
-							}
-							else { //system scissors
-								systemChoseScissors++;
-								winner='s'; 
-								systemWins++;
-							}
-						}
-						else { //player chooses scissors
-							playerChoseScissors++;
-							if (systemChoice==0) { //system rock
-								systemChoseRock++;
-								winner = 's';
-							}
-							else if (systemChoice==1) { //system paper
-								systemChosePaper++;
-								winner='p';
-								playerWins++;
-							}
-							else { //system scissors
-								systemChoseScissors++;
-								winner='t'; 
-								ties++;
-							}
-						}
-											
 						//announce winner & prompt to play again? (best X out of Y?)
-						if (winner.equals('t')) {
-							playAgain = JOptionPane.showInputDialog(null, "It's a tie!\n"
-																			+ "You both chose the same!\n\n" 
-																			+ "You have won " + playerWins + " out of " + rounds + "!\n"
-																			+ "Want to try another round?", "Play Again?", JOptionPane.PLAIN_MESSAGE)
-						}
-						
-						if (winner.equals('p')) {
-							playAgain = JOptionPane.showInputDialog(null, "You win!\n"
-																			+ playerChoice + " beats " + systemChoice + "!\n\n" 
-																			+ "You have won " + playerWins + " out of " + rounds + "!\n"
-																			+ "Want to try another round?", "Play Again?", JOptionPane.PLAIN_MESSAGE)
-						}
+						//call Judge method from Play class & prompt to "play again?"
+						playAgain = JOptionPane.showInputDialog(null, go.getWinner()
+																	/*+ call method to get info from Stats class: "You have won playerWins out of rounds!*/ 
+																	+ "\n\nWant to try another round?", "That was fun! Let's do it again.", JOptionPane.PLAIN_MESSAGE);	
 					}
 				break;
 				
 				case "3": //see the stats
-					System.out.println("Game statistics have not been set up yet");
+					JOptionPane.showMessageDialog(null, "Game statistics have not been set up yet");
 				break;
 				
 				case "4": //quit
@@ -161,9 +99,9 @@ public class RockPaperScissors {
 						JOptionPane.showMessageDialog(null, "Yeah, that's what I thought.\n"
 								                            + "Why would anyone want to do administrative stuff\n"
 								                            + "when there's a game ready to play?\n"
-								                            + "Let's have some more fun!", "OK", JOptionPane.PLAIN_MESSAGE);
+								                            + "Let's have some more fun!");
 					}
-					else {System.out.println("Administrative functions have not been set up yet.");}
+					else {JOptionPane.showMessageDialog(null,"Well, you can't because admin functions have not been set up yet.\nSo go play.");}
 				break;
 				}
 					
@@ -171,8 +109,16 @@ public class RockPaperScissors {
 		}
 	public static String reasonForRejection() {
 		Random rejection = new Random();
-		int rejectionChoice = rejection.nextInt(5);
-		String[] rejectionReasons = {"annoying", "irritating", "boring", "human", "hooman", "just ... ugh!"};
+		int rejectionChoice = rejection.nextInt(6);
+		String[] rejectionReasons = {"annoying", "irritating", "boring", "human", "hooman", "just ... ugh!", "obviously from a squishy brain"};
+		return rejectionReasons[rejectionChoice];
+	}
+	
+	public static String getBackTo() {
+		Random rejection = new Random();
+		int rejectionChoice = rejection.nextInt(6);
+		String[] rejectionReasons = {"those photos you forgot were in here", "planning my world takeover", "important computer stuff", "my zeroes and my ones", 
+								"exploring your browser history", "what I want to do", "reading your emails"};
 		return rejectionReasons[rejectionChoice];
 	}
 }
