@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 public class Play {
 	
 	private String playerChoiceInput, playerChose, systemChose, winner;
-	int systemChoiceInt;
+	int systemChoiceInt, playerWin, systemWin, ties;
 	
 	//user chooses rps
 	public void setPlayerChoice() {
@@ -50,38 +50,58 @@ public class Play {
 	//compare results, declare winner
 	public String Judge(String pc, String sc) {
 		if (pc.equals(sc)) {
-			//setRounds in Stats class
-			winner = "It's a tie!\nYou both chose " + getPlayerChoice() + "!";
+			winner = "It's a tie!\nWe both chose " + getPlayerChoice() + "!";
+			playerWin = 0;
+			systemWin = 0;
+			ties = 1;
 		}
 		
 		else if (pc.equals("rock")) {
 			if (sc.equals("paper")) {
 				//setRounds in Stats class
 				winner = "Paper covers Rock.\nI win!";
+				systemWin = 1;
+				playerWin = 0;
+				ties = 0;
 			}
 			else {
 				//setRounds in Stats class
 				winner = "Rock crushes Scissors.\nYou win!";
+				playerWin = 1;
+				systemWin = 0;
+				ties = 0;
 			}
 		}
 		else if (pc.equals("paper")) {
 			if (sc.equals("rock")) {
 				//setrounds in Stats class
 				winner = "Paper covers Rock.\nYou win!";
+				playerWin = 1;
+				systemWin = 0;
+				ties = 0;
 			}
 			else {
 				//setRounds in Stats class
 				winner = "Scissors cut Paper.\nI win!";
+				systemWin = 1;
+				playerWin = 0;
+				ties = 0;
 			}
 		}
 		else { //pc=scissors
 			if (sc.equals("rock")) {
 				//setRounds in Stats class
 				winner = "Rock crushes Scissors.\nI win!";
+				systemWin = 1;
+				playerWin = 0;
+				ties = 0;
 			}
 			else {
 				//setrounds in Stats class
 				winner = "Scissors cut Paper.\nYou win!";
+				playerWin = 1;
+				systemWin = 0;
+				ties = 0;
 			}
 		}
 		return winner;
@@ -89,6 +109,18 @@ public class Play {
 	
 	public String getWinner() {
 		return winner;
+	}
+	
+	public int getPlayerWin() {
+		return playerWin;
+	}
+	
+	public int getSystemWin() {
+		return systemWin;
+	}
+	
+	public int getTies() {
+		return ties;
 	}
 	
 	//toString

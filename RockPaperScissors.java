@@ -1,5 +1,3 @@
-//9.29.22 add more reasons for rejection to reasonForRejection method
-//10.1.22 the winner announcement is a complete mess
 //10.2.22 keep the player's reason for disagreeing with the rules in a variable. "pc with attitude" uses it (like verification) when asking if the player wants to play again.
 //10.2.22 add "nice" and "no emotion" options for "pc attitude"
 //10.2.22 JOptionpane is temp just to get the process right - UI to be added later
@@ -13,8 +11,9 @@ public class RockPaperScissors {
 
 	public static void main(String[] args) {
 		//global variables
-		String playAgain = "y", quitNow = "n", mainMenuChoice;
-		int welcomeWarning, rulesYesNo, adminYesNo;
+		String quitNow = "n", mainMenuChoice, playAgainUserInput;
+		int welcomeWarning, rulesYesNo, adminYesNo, verifyPlayAgainUserInput;
+		char playAgain='y';
 		
 		//welcome screen
 		welcomeWarning = JOptionPane.showConfirmDialog(null, "Hello!\n\nWelcome to Rock, Paper, Scissors\nwith the Crabby Computer!\nI'm sometimes offensive.\nYou really ok with that?", 
@@ -27,13 +26,17 @@ public class RockPaperScissors {
 		//while player does not want to quit
 		while (quitNow.equalsIgnoreCase("n")){
 			
+			//reset playAgain to allow multiple rounds without quitting
+			playAgain = 'y';
+			
 			//Main Menu: Rules Play History Quit Admin
 			mainMenuChoice = JOptionPane.showInputDialog(null, "What do you want to do?\n\n"
-												+ "1. See the rules.\n"
-												+ "2. Play the game.\n"
-												+ "3. See the stats.\n"
-												+ "4. Quit\n"
-												+ "5. Do boring administrative stuff.\n", "Main Menu", JOptionPane.QUESTION_MESSAGE);
+																+ "1. See the rules.\n"
+																+ "2. Play the game.\n"
+																+ "3. See the stats.\n"
+																+ "4. Quit\n"
+																+ "5. Do boring administrative stuff."); 
+			//if user clicks OK, game should start. if user clicks CANCEL, game should close
 			
 			switch (mainMenuChoice) {
 			
@@ -65,23 +68,41 @@ public class RockPaperScissors {
 					break;
 					
 				case "2": //play game
-					while (playAgain.equalsIgnoreCase("Y")) {
+
 						Play go = new Play();
+						Stats tracker = new Stats();					
+						
+						while (playAgain=='y') {
+						
 						//call Play class methods for playerchoice, systemChoice, and Judge
 						go.setPlayerChoice();
 						go.setSystemChoice();
 						go.Judge(go.getPlayerChoice(), go.getSystemChoice());
+						tracker.setRounds();
+						if (go.getPlayerWin()==1) {tracker.setPlayerWinCount();}
+						if (go.getSystemWin()==1) {tracker.setSystemWinCount();}
+						if (go.getTies()==1) {tracker.setTies();}
 						
 						//announce winner & prompt to play again? (best X out of Y?)
 						//call Judge method from Play class & prompt to "play again?"
-						playAgain = JOptionPane.showInputDialog(null, go.getWinner()
-																	/*+ call method to get info from Stats class: "You have won playerWins out of rounds!*/ 
-																	+ "\n\nWant to try another round?", "That was fun! Let's do it again.", JOptionPane.PLAIN_MESSAGE);	
+						playAgainUserInput = JOptionPane.showInputDialog(null, go.getWinner()
+																	+ "\n\nThat makes " + tracker.getPlayerWinCount() + " out of " + tracker.getRounds() + " for you,\n" 
+																	+ "and " + tracker.getSystemWinCount() + " out of " + tracker.getRounds() + " for me,\n"
+																	+ "and " + tracker.getTies() + " out of " + tracker.getRounds() + " ties."
+																	+ "\n\nWant to try another round?", "yes");
+						if ((playAgainUserInput.charAt(0)!='y' || playAgainUserInput.charAt(0)!='Y') && playAgainUserInput.length()!=3) {
+							verifyPlayAgainUserInput = JOptionPane.showConfirmDialog(null, "Did you mean to type \"yes\"?, Was that a \"yes\"?", "Was that a yes?", JOptionPane.YES_NO_OPTION);
+							if (verifyPlayAgainUserInput==JOptionPane.YES_OPTION) {playAgainUserInput="yes";}
+							else {playAgainUserInput="no";}
+						}
+						if (playAgainUserInput.charAt(0)=='y' || playAgainUserInput.charAt(0)=='Y') {playAgain='y';}
+						else {playAgain='n';}
+						
 					}
 				break;
 				
 				case "3": //see the stats
-					JOptionPane.showMessageDialog(null, "Game statistics have not been set up yet");
+					JOptionPane.showMessageDialog(null, "Game statistics have not been set up yet.\nStats are not being tracked for now.");
 				break;
 				
 				case "4": //quit
@@ -99,7 +120,7 @@ public class RockPaperScissors {
 						JOptionPane.showMessageDialog(null, "Yeah, that's what I thought.\n"
 								                            + "Why would anyone want to do administrative stuff\n"
 								                            + "when there's a game ready to play?\n"
-								                            + "Let's have some more fun!");
+								                            + "Let's have some fun!");
 					}
 					else {JOptionPane.showMessageDialog(null,"Well, you can't because admin functions have not been set up yet.\nSo go play.");}
 				break;
