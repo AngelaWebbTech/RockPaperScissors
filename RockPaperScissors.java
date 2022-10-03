@@ -96,8 +96,7 @@ public class RockPaperScissors {
 							else {playAgainUserInput="no";}
 						}
 						if (playAgainUserInput.charAt(0)=='y' || playAgainUserInput.charAt(0)=='Y') {playAgain='y';}
-						else {playAgain='n';}
-						
+						else {playAgain='n';}						
 					}
 				break;
 				

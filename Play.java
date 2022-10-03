@@ -16,6 +16,11 @@ public class Play {
 			while (playerChoiceInput.charAt(0)!='r' && playerChoiceInput.charAt(0)!='R' 
 					&& playerChoiceInput.charAt(0)!='p' && playerChoiceInput.charAt(0)!='P'
 					&& playerChoiceInput.charAt(0)!='s' && playerChoiceInput.charAt(0)!='S') {
+				//first time - did you miss the letter? there are no [word that starts with that letter] in this game. reprompt
+				//second time - ok, human, there are three choices: rock, paper, and scissors. that's all there is. no [whatever they entered]. just those three. 
+						//all you have to do is choose one. 
+				//third time - really? why would THAT be in a game called "Rock, paper, scissors?"
+				//fourth time - you can't be serious. you have to be doing this on purpose. Why do you ask to play a game, and then not play? Rock, Paper, Scissors, or Forfeit?
 				playerChoiceInput = JOptionPane.showInputDialog(null, "That choice is not valid. Please type \"rock,\" \"paper,\" or \"scissors.\"", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			if (playerChoiceInput.charAt(0)=='r' || playerChoiceInput.charAt(0)=='R') {
@@ -121,6 +126,83 @@ public class Play {
 	
 	public int getTies() {
 		return ties;
+	}
+	
+	private String badInput(String bi) {
+		String msg;
+		if (bi=="a") { //did you miss the s?
+			msg = 
+		}
+		else if (bi=="b") {
+			msg = 
+		}
+		else if (bi=="c") {
+			msg = 
+		}
+		else if (bi=="d") { //did you miss the r?
+			msg = 
+		}
+		else if (bi=="e") { //did you miss the r?
+			msg = 
+		}
+		else if (bi=="f") { //did you miss the r?
+			msg = 
+		}
+		else if (bi=="g") { 
+			msg = 
+		}
+		else if (bi=="h") {
+			msg = 
+		}
+		else if (bi=="i") {
+			msg = 
+		}
+		else if (bi=="j") {
+			msg = 
+		}
+		else if (bi=="k") {
+			msg = 
+		}
+		else if (bi=="l") { //did you miss the p?
+			msg = 
+		}
+		else if (bi=="m") {
+			msg = 
+		}
+		else if (bi=="n") {
+			msg = 
+		}
+		else if (bi=="o") { //did you miss the p?
+			msg = 
+		}
+		else if (bi=="q") { //quitting is not an option
+			msg = 
+		}
+		else if (bi=="t") { //did you miss the r?
+			msg = 
+		}
+		else if (bi=="u") {
+			msg = 
+		}
+		else if (bi=="v") {
+			msg = 
+		}
+		else if (bi=="w") { //did you miss the s?
+			msg = 
+		}
+		else if (bi=="x") { //did you miss the s?
+			msg = 
+		}
+		else if (bi=="y") { 
+			msg = 
+		}
+		else if (bi=="z") { //did you miss the s? 
+			msg = 
+		}
+		else { //that's not even a letter
+			msg = 
+		}
+		return msg;
 	}
 	
 	//toString
