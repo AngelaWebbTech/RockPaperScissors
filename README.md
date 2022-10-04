@@ -1,4 +1,5 @@
 # RockPaperScissors
-traditional Rock, Paper, Scissors against a PC with an attitude problem
+traditional Rock, Paper, Scissors, but the opponent is a PC with an attitude problem
 
-primary purpose of this game is to practice using classes
+I am a student. This game exists primarily as a place to pracctice with Object Oriented programming.
+This is why the code is a mess. It could be written simpler, but it exists as a practice area.
