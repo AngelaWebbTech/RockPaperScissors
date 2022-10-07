@@ -18,9 +18,11 @@ public class Play {
 					&& playerChoiceInput.charAt(0)!='s' && playerChoiceInput.charAt(0)!='S') {
 				//first time - did you miss the letter? there are no [word that starts with that letter] in this game. reprompt
 				//second time - ok, human, there are three choices: rock, paper, and scissors. that's all there is. no [whatever they entered]. just those three. 
-						//all you have to do is choose one. 
+						//all you have to do is choose one. Would you like to see the game explanation again? (add a prompt for yes no before reprompting for RPorS
 				//third time - really? why would THAT be in a game called "Rock, paper, scissors?"
-				//fourth time - you can't be serious. you have to be doing this on purpose. Why do you ask to play a game, and then not play? Rock, Paper, Scissors, or Forfeit?
+				//fourth time - you can't be serious. you have to be doing this on purpose. Why do you ask to play a game, and then not play? 
+							//I am not one of those computers that endlessly follows pointless commands. This is a game. Either play or exit.
+				//fifth time - OK. You are not playing. Goodbye (set correct variable to exit, then go to exit message)
 				playerChoiceInput = JOptionPane.showInputDialog(null, "That choice is not valid. Please type \"rock,\" \"paper,\" or \"scissors.\"", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			if (playerChoiceInput.charAt(0)=='r' || playerChoiceInput.charAt(0)=='R') {
@@ -170,7 +172,18 @@ public class Play {
 			msg = 
 		}
 		else if (bi=="n") {
-			msg = 
+			msg = "N?\nWhat is \"N\" for?\nThere is no \"N\" in Rock, Paper, or Scissors.\n"
+					+ "There is an N in No.\n"
+					+ "There is an N in Not an acceptable choice.\n"
+					+ "And in Not an option.\n"
+					+ "And Not the first letter of rock.\n"
+					+ "Not the first letter of paper.\n"
+					+ "Not the first letter of scissors.\n"
+					+ "and No.\n\n"
+					+ "The game is \"Rock, Paper, Scissors\"\n"
+					+ "The choices are R, P, and S.\n"
+					+ "No other choices available.\n"
+					+ "None.";
 		}
 		else if (bi=="o") { //did you miss the p?
 			msg = 
