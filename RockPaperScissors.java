@@ -45,6 +45,7 @@ public class RockPaperScissors {
 					rulesYesNo = JOptionPane.showConfirmDialog(null, "RULES:\n\n"
 							+ "When asked, you will choose R for rock, P for paper, or S for scissors.\n"
 							+ "Use of other buttons will result in a delay of game, as well as loss of my respect.\n"
+							+ "And the potential of me quitting the game.\n"
 							+ "I will also choose rock, paper, or scissors.\n\n"
 							+ "Winner is determined based on the following:\n"
 							+ "Rock beats Scissors.\n"

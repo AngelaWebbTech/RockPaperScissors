@@ -6,23 +6,23 @@ import javax.swing.JOptionPane;
 public class Play {
 	
 	private String playerChoiceInput, playerChose, systemChose, winner;
-	int systemChoiceInt, playerWin, systemWin, ties;
+	int systemChoiceInt, playerWin, systemWin, ties, playerInputAttemptCount;
 	
 	//user chooses rps
 	public void setPlayerChoice() {
+			playerInputAttemptCount=0; //reset to zero for each round
 			playerChoiceInput = JOptionPane.showInputDialog(null, "Make your choice:\n" + "(R)ock, (P)aper, or (S)cissors?", "Choose!", JOptionPane.PLAIN_MESSAGE);
+			playerInputAttemptCount++;
 			
 			//if player does not choose rps, or enters more than one letter, reprompt with funny message
 			while (playerChoiceInput.charAt(0)!='r' && playerChoiceInput.charAt(0)!='R' 
 					&& playerChoiceInput.charAt(0)!='p' && playerChoiceInput.charAt(0)!='P'
 					&& playerChoiceInput.charAt(0)!='s' && playerChoiceInput.charAt(0)!='S') {
-				//first time - did you miss the letter? there are no [word that starts with that letter] in this game. reprompt
-				//second time - ok, human, there are three choices: rock, paper, and scissors. that's all there is. no [whatever they entered]. just those three. 
-						//all you have to do is choose one. Would you like to see the game explanation again? (add a prompt for yes no before reprompting for RPorS
-				//third time - really? why would THAT be in a game called "Rock, paper, scissors?"
-				//fourth time - you can't be serious. you have to be doing this on purpose. Why do you ask to play a game, and then not play? 
-							//I am not one of those computers that endlessly follows pointless commands. This is a game. Either play or exit.
-				//fifth time - OK. You are not playing. Goodbye (set correct variable to exit, then go to exit message)
+				//first time - call badInput(playerChoiceInput, playerInputAttemptCount) function. reprompt
+				//second time -  call badInput(playerChoiceInput, playerInputAttemptCount) function, then reprompt
+				//third time - call badInput(playerChoiceInput, playerInputAttemptCount) function, then reprompt
+				//fourth time - call badInput(playerChoiceInput, playerInputAttemptCount) function. (this may end the game)
+				//fifth time - call badInput(playerChoiceInput, playerInputAttemptCount) function (this will end the game)
 				playerChoiceInput = JOptionPane.showInputDialog(null, "That choice is not valid. Please type \"rock,\" \"paper,\" or \"scissors.\"", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			if (playerChoiceInput.charAt(0)=='r' || playerChoiceInput.charAt(0)=='R') {
@@ -130,49 +130,73 @@ public class Play {
 		return ties;
 	}
 	
-	private String badInput(String bi) {
-		String msg;
+	private String badInput(String bi, int numOfTries) {
+		String msgPart1, msgPart2;
+		
+		//message based on number of tries
+		if (numOfTries==1) {
+			msgPart1 = "The only available choices are:\nR for rock\nP for paper and\nS for scissors.\n" + bi + " is not an option.";
+		}
+		else if (numOfTries==2) {
+			//allow user to choose to see the game explanation again or play
+			msgPart1 = ("Ok, human, there are three choices: rock, paper, and scissors.\nThat's all there is.\nNo " + bi +".\nJust those three.\n" + 
+					    "All you have to do is choose one.\n\nWould you like to see the game explanation again?");//*******************************************INCOMPLETE LINE
+		}
+		else if (numOfTries==3) {
+			msgPart1 = ("Really?\nWhy would THAT be in a game called \"Rock, Paper, Scissors?\" "); 
+		}
+		else if (numOfTries==4) {
+			//allow user to choose to exit or play
+			msgPart1 = ("You can't be serious.\nYou have to be doing this on purpose.\nWhy do you ask to play a game, and then not play?\n" 
+					    + "I am not one of those computers that endlessly follows pointless commands.\nThis is a game. Either play or exit."); //*************INCOMPLETE LINE 
+		}
+		else {//numOfTries>4
+			msgPart1 = "Ok then.\nYou are not playing nicely.\nGoodbye."; 
+			//set correct variable to exit, then go to exit message     **************************************************************************************INCOMPLETE LINE
+		}
+			
+		//message based on choice
 		if (bi=="a") { //did you miss the s?
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="b") {
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="c") {
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="d") { //did you miss the r?
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="e") { //did you miss the r?
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="f") { //did you miss the r?
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="g") { 
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="h") {
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="i") {
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="j") {
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="k") {
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="l") { //did you miss the p?
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="m") {
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="n") {
-			msg = "N?\nWhat is \"N\" for?\nThere is no \"N\" in Rock, Paper, or Scissors.\n"
+			msgPart2 = "N?\nWhat is \"N\" for?\nThere is no \"N\" in Rock, Paper, or Scissors.\n"
 					+ "There is an N in No.\n"
 					+ "There is an N in Not an acceptable choice.\n"
 					+ "And in Not an option.\n"
@@ -186,36 +210,38 @@ public class Play {
 					+ "None.";
 		}
 		else if (bi=="o") { //did you miss the p?
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="q") { //quitting is not an option
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="t") { //did you miss the r?
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="u") {
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="v") {
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="w") { //did you miss the s?
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="x") { //did you miss the s?
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="y") { 
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="z") { //did you miss the s? 
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else { //that's not even a letter
-			msg = 
+			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
-		return msg;
+	
+	//reprompt with message based on numOfTries
+		return msgPart1 + msgPart2;
 	}
 	
 	//toString
