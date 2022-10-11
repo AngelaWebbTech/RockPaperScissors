@@ -8,21 +8,23 @@ public class Play {
 	
 	private String playerChoiceInput, playerChose, systemChose, winner;
 	int systemChoiceInt, playerWin, systemWin, ties, playerInputAttemptCount;
+	private char playerChoiceInputChar;
 	
 	//user chooses rps
 	public void setPlayerChoice() {
 			playerChoiceInput = JOptionPane.showInputDialog(null, "Make your choice:\n" + "(R)ock, (P)aper, or (S)cissors?", "Choose!", JOptionPane.PLAIN_MESSAGE);
+			playerChoiceInputChar = playerChoiceInput.toLowerCase().charAt(0);
 			playerInputAttemptCount=1; //reset at beginning of each round
 			
 			//if player does not choose rps, or enters more than one letter, reprompt with funny message			
-			while ((playerChoiceInput.charAt(0)!='r' && playerChoiceInput.charAt(0)!='R' 
-					&& playerChoiceInput.charAt(0)!='p' && playerChoiceInput.charAt(0)!='P'
-					&& playerChoiceInput.charAt(0)!='s' && playerChoiceInput.charAt(0)!='S') && playerInputAttemptCount<6) {
+			while ((playerChoiceInputChar!='r' && playerChoiceInputChar!='p' && playerChoiceInputChar!='s') && playerInputAttemptCount<6) {
 				//1st, 2nd, 3rd time - call badInput(playerChoiceInput, playerInputAttemptCount) function. reprompt ************************************************INCOMPLETE SECTION
 				if (playerInputAttemptCount<=3) {
 					playerChoiceInput = JOptionPane.showInputDialog(null, badInput(playerChoiceInput, playerInputAttemptCount) 
 																	+ "\n\nChoose one of the following:\n" + "(R)ock, (P)aper, or (S)cissors?", 
 																	"Oops! Try again.", JOptionPane.PLAIN_MESSAGE);
+					playerChoiceInputChar = playerChoiceInput.toLowerCase().charAt(0);
+					
 					playerInputAttemptCount++;
 				}
 				//fourth time - call badInput(playerChoiceInput, playerInputAttemptCount) function. (this may end the game) ****************************************INCOMPLETE SECTION
@@ -30,22 +32,23 @@ public class Play {
 					playerChoiceInput = JOptionPane.showInputDialog(null, badInput(playerChoiceInput, playerInputAttemptCount) 
 							+ "\n\nChoose one of the following:\n" + "(R)ock, (P)aper, or (S)cissors?", 
 							"Why? Just ... why?", JOptionPane.PLAIN_MESSAGE);
+					playerChoiceInputChar = playerChoiceInput.toLowerCase().charAt(0);
+					
 					playerInputAttemptCount++; //if continue playing is chosen
 				}
 				//fifth time - call badInput(playerChoiceInput, playerInputAttemptCount) function (this will end the game) ****************************************INCOMPLETE SECTION
 				if (playerInputAttemptCount==5) {
 					badInput(playerChoiceInput, playerInputAttemptCount);
-					//add code to exit game
 				}
-				playerChoiceInput = JOptionPane.showInputDialog(null, "That choice is not valid. Please type \"rock,\" \"paper,\" or \"scissors.\"", "Error", JOptionPane.ERROR_MESSAGE);
+				//playerChoiceInput = JOptionPane.showInputDialog(null, "That choice is not valid. Please type \"rock,\" \"paper,\" or \"scissors.\"", "Error", JOptionPane.ERROR_MESSAGE);
 			}
-			if (playerChoiceInput.charAt(0)=='r' || playerChoiceInput.charAt(0)=='R') {
+			if (playerChoiceInputChar=='r') {
 				playerChose = "rock";
 			}
-			else if (playerChoiceInput.charAt(0)=='p' || playerChoiceInput.charAt(0)=='P') {
+			else if (playerChoiceInputChar=='p') {
 				playerChose = "paper";
 			}
-			else if (playerChoiceInput.charAt(0)=='s' || playerChoiceInput.charAt(0)=='S') {
+			else if (playerChoiceInputChar=='s') {
 				playerChose = "scissors";
 			}
 			else
@@ -171,9 +174,11 @@ public class Play {
 			msgPart1 = ("Really?\nWhy would THAT be in a game called \"Rock, Paper, Scissors?\" "); 
 		}
 		else if (numOfTries==4) {
-			//allow user to choose to exit or play
-			msgPart1 = ("You can't be serious.\nYou have to be doing this on purpose.\nWhy do you ask to play a game, and then not play?\n" 
-					    + "I am not one of those computers that endlessly follows pointless commands.\nThis is a game. Either play or exit."); //*************INCOMPLETE LINE 
+			//allow user to choose to exit or play *****************************************************************************************************************INCOMPLETE SECTION
+			int playOrExit = JOptionPane.showConfirmDialog(null, "You can't be serious.\nYou have to be doing this on purpose.\nWhy do you ask to play a game, and then not play?\n" 
+					    + "I am not one of those computers that endlessly follows pointless commands.\nThis is a game. Either play or exit.", "Why?", /*need custom buttons*/);
+			//if playOrExit = play       msgPart1 = ("Ok, one more chance. And for the record:");
+			//else playOrExit = exit     msgPart1 = ("Ok. Goodbye then.");
 		}
 		else {//numOfTries>4
 			msgPart1 = "You are not playing nicely.\nGoodbye."; 
@@ -220,7 +225,7 @@ public class Play {
 			msgPart2 = ("msg for " + bi + " not entered yet."); //*******************************************************************************************INCOMPLETE LINE
 		}
 		else if (bi=="n") {
-			msgPart2 = "N?\nWhat is \"N\" for?\nThere is no \"N\" in Rock, Paper, or Scissors.\n"
+			msgPart2 = "There is no \"N\" in Rock, Paper, or Scissors.\n"
 					+ "There is an N in No.\n"
 					+ "There is an N in Not an acceptable choice.\n"
 					+ "And in Not an option.\n"
@@ -265,7 +270,10 @@ public class Play {
 		}
 	
 	//reprompt with message based on numOfTries
-		return msgPart1 + msgPart2;
+		if (msgPart1.contains("oodbye"))
+			return msgPart1;
+		else
+			return msgPart1 + msgPart2;
 	}
 	
 	//toString
