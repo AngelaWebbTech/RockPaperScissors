@@ -41,7 +41,6 @@ public class RockPaperScissors {
 			switch (mainMenuChoice) {
 			
 				case "1":
-					Scanner rulesKeyboard = new Scanner(System.in);
 					rulesYesNo = JOptionPane.showConfirmDialog(null, "RULES:\n\n"
 							+ "When asked, you will choose R for rock, P for paper, or S for scissors.\n"
 							+ "Use of other buttons will result in a delay of game, as well as loss of my respect.\n"
@@ -65,7 +64,6 @@ public class RockPaperScissors {
 																	+ "Your reason is rejected.\n"
 																	+ "Traditional rules remain.", "No. Just no.", rulesYesNo);
 					}
-					rulesKeyboard.close();
 					break;
 					
 				case "2": //play game
@@ -128,12 +126,7 @@ public class RockPaperScissors {
 					
 			}//close while quitNow.equalsIgnoreCase("n")
 		}
-	public static String reasonForRejection() {
-		Random rejection = new Random();
-		int rejectionChoice = rejection.nextInt(6);
-		String[] rejectionReasons = {"annoying", "irritating", "boring", "human", "hooman", "just ... ugh!", "obviously from a squishy brain"};
-		return rejectionReasons[rejectionChoice];
-	}
+
 	
 	public static String getBackTo() {
 		Random rejection = new Random();

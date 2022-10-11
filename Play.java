@@ -1,4 +1,5 @@
 //add code to validate misspellings by asking the user "did you mean "rock"?" if yes assign variable, if no display "pc with attitude" comment & reprompt
+//does playerInputAttemptCount<6 need to be in line 21? If playerInputAttemptCount=5 causes game to exit, this seems like unecessary code
 
 import java.util.Random;
 import javax.swing.JOptionPane;
@@ -10,19 +11,32 @@ public class Play {
 	
 	//user chooses rps
 	public void setPlayerChoice() {
-			playerInputAttemptCount=0; //reset to zero for each round
 			playerChoiceInput = JOptionPane.showInputDialog(null, "Make your choice:\n" + "(R)ock, (P)aper, or (S)cissors?", "Choose!", JOptionPane.PLAIN_MESSAGE);
-			playerInputAttemptCount++;
+			playerInputAttemptCount=1; //reset at beginning of each round
 			
-			//if player does not choose rps, or enters more than one letter, reprompt with funny message
-			while (playerChoiceInput.charAt(0)!='r' && playerChoiceInput.charAt(0)!='R' 
+			//if player does not choose rps, or enters more than one letter, reprompt with funny message			
+			while ((playerChoiceInput.charAt(0)!='r' && playerChoiceInput.charAt(0)!='R' 
 					&& playerChoiceInput.charAt(0)!='p' && playerChoiceInput.charAt(0)!='P'
-					&& playerChoiceInput.charAt(0)!='s' && playerChoiceInput.charAt(0)!='S') {
-				//first time - call badInput(playerChoiceInput, playerInputAttemptCount) function. reprompt
-				//second time -  call badInput(playerChoiceInput, playerInputAttemptCount) function, then reprompt
-				//third time - call badInput(playerChoiceInput, playerInputAttemptCount) function, then reprompt
-				//fourth time - call badInput(playerChoiceInput, playerInputAttemptCount) function. (this may end the game)
-				//fifth time - call badInput(playerChoiceInput, playerInputAttemptCount) function (this will end the game)
+					&& playerChoiceInput.charAt(0)!='s' && playerChoiceInput.charAt(0)!='S') && playerInputAttemptCount<6) {
+				//1st, 2nd, 3rd time - call badInput(playerChoiceInput, playerInputAttemptCount) function. reprompt ************************************************INCOMPLETE SECTION
+				if (playerInputAttemptCount<=3) {
+					playerChoiceInput = JOptionPane.showInputDialog(null, badInput(playerChoiceInput, playerInputAttemptCount) 
+																	+ "\n\nChoose one of the following:\n" + "(R)ock, (P)aper, or (S)cissors?", 
+																	"Oops! Try again.", JOptionPane.PLAIN_MESSAGE);
+					playerInputAttemptCount++;
+				}
+				//fourth time - call badInput(playerChoiceInput, playerInputAttemptCount) function. (this may end the game) ****************************************INCOMPLETE SECTION
+				if (playerInputAttemptCount==4) {
+					playerChoiceInput = JOptionPane.showInputDialog(null, badInput(playerChoiceInput, playerInputAttemptCount) 
+							+ "\n\nChoose one of the following:\n" + "(R)ock, (P)aper, or (S)cissors?", 
+							"Why? Just ... why?", JOptionPane.PLAIN_MESSAGE);
+					playerInputAttemptCount++; //if continue playing is chosen
+				}
+				//fifth time - call badInput(playerChoiceInput, playerInputAttemptCount) function (this will end the game) ****************************************INCOMPLETE SECTION
+				if (playerInputAttemptCount==5) {
+					badInput(playerChoiceInput, playerInputAttemptCount);
+					//add code to exit game
+				}
 				playerChoiceInput = JOptionPane.showInputDialog(null, "That choice is not valid. Please type \"rock,\" \"paper,\" or \"scissors.\"", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			if (playerChoiceInput.charAt(0)=='r' || playerChoiceInput.charAt(0)=='R') {
@@ -139,8 +153,15 @@ public class Play {
 		}
 		else if (numOfTries==2) {
 			//allow user to choose to see the game explanation again or play
-			msgPart1 = ("Ok, human, there are three choices: rock, paper, and scissors.\nThat's all there is.\nNo " + bi +".\nJust those three.\n" + 
-					    "All you have to do is choose one.\n\nWould you like to see the game explanation again?");//*******************************************INCOMPLETE LINE
+			int menuOrTryAgain = JOptionPane.showConfirmDialog(null, "Ok, human, there are three choices: rock, paper, and scissors.\nThat's all there is.\nNo " 
+																+ bi +".\nJust those three.\n" + "All you have to do is choose one.\n\n"
+																+ "Would you like to see the game explanation again?", "what?", JOptionPane.YES_NO_OPTION);
+			 //if secondTry equals yes, go to rules
+			if (menuOrTryAgain==JOptionPane.YES_OPTION) {
+				//show user game instructions  //************************************************************************************************************INCOMPLETE LINE
+			}
+			else
+				msgPart1 = ("There we go. You now understand:\n");
 		}
 		else if (numOfTries==3) {
 			msgPart1 = ("Really?\nWhy would THAT be in a game called \"Rock, Paper, Scissors?\" "); 
