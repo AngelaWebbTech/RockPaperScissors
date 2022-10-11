@@ -45,7 +45,11 @@ public class Play {
 			else if (playerChoiceInput.charAt(0)=='p' || playerChoiceInput.charAt(0)=='P') {
 				playerChose = "paper";
 			}
-			else {playerChose = "scissors";}
+			else if (playerChoiceInput.charAt(0)=='s' || playerChoiceInput.charAt(0)=='S') {
+				playerChose = "scissors";
+			}
+			else
+				playerChose = "goodbye";
 	}
 	
 	public String getPlayerChoice() {
@@ -60,7 +64,7 @@ public class Play {
 			systemChose = "rock";
 		else if (systemChoiceInt==1)
 			systemChose = "paper";
-		else 
+		else
 			systemChose = "scissors";
 	}
 	
@@ -145,7 +149,7 @@ public class Play {
 	}
 	
 	private String badInput(String bi, int numOfTries) {
-		String msgPart1, msgPart2;
+		String msgPart1="msgPart1 error", msgPart2="msgPart2 error";
 		
 		//message based on number of tries
 		if (numOfTries==1) {
@@ -158,10 +162,10 @@ public class Play {
 																+ "Would you like to see the game explanation again?", "what?", JOptionPane.YES_NO_OPTION);
 			 //if secondTry equals yes, go to rules
 			if (menuOrTryAgain==JOptionPane.YES_OPTION) {
-				//show user game instructions  //************************************************************************************************************INCOMPLETE LINE
+				RockPaperScissors.showRules();
 			}
 			else
-				msgPart1 = ("There we go. You now understand:\n");
+				msgPart1 = ("Ok, then you understand that:\n");
 		}
 		else if (numOfTries==3) {
 			msgPart1 = ("Really?\nWhy would THAT be in a game called \"Rock, Paper, Scissors?\" "); 
@@ -172,8 +176,7 @@ public class Play {
 					    + "I am not one of those computers that endlessly follows pointless commands.\nThis is a game. Either play or exit."); //*************INCOMPLETE LINE 
 		}
 		else {//numOfTries>4
-			msgPart1 = "Ok then.\nYou are not playing nicely.\nGoodbye."; 
-			//set correct variable to exit, then go to exit message     **************************************************************************************INCOMPLETE LINE
+			msgPart1 = "You are not playing nicely.\nGoodbye."; 
 		}
 			
 		//message based on choice
