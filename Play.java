@@ -176,9 +176,15 @@ public class Play {
 		else if (numOfTries==4) {
 			//allow user to choose to exit or play *****************************************************************************************************************INCOMPLETE SECTION
 			int playOrExit = JOptionPane.showConfirmDialog(null, "You can't be serious.\nYou have to be doing this on purpose.\nWhy do you ask to play a game, and then not play?\n" 
-					    + "I am not one of those computers that endlessly follows pointless commands.\nThis is a game. Either play or exit.", "Why?", /*need custom buttons*/);
+					    + "I am not one of those computers that endlessly follows pointless commands.\nThis is a game. Do you want to play the game?" /*Either play or exit.*/, 
+					    "Why?", JOptionPane.YES_NO_OPTION/*need custom buttons*/);
 			//if playOrExit = play       msgPart1 = ("Ok, one more chance. And for the record:");
-			//else playOrExit = exit     msgPart1 = ("Ok. Goodbye then.");
+			if (playOrExit==JOptionPane.YES_OPTION)
+				msgPart1 = "Ok. One more chance. And for the record:\n\n";
+			//else msgPart1 = ("Ok. Goodbye then.");
+			else {
+				msgPart1 = "Ok. Goodbye then.";
+			}	
 		}
 		else {//numOfTries>4
 			msgPart1 = "You are not playing nicely.\nGoodbye."; 
