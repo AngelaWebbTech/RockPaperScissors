@@ -39,7 +39,7 @@ public class Play {
 				//fifth time - call badInput(playerChoiceInput, playerInputAttemptCount) function (this will end the game) ****************************************INCOMPLETE SECTION
 				if (playerInputAttemptCount==5) {
 					JOptionPane.showInternalMessageDialog(null, badInput(playerChoiceInput, playerInputAttemptCount));
-					playerChoiceInput = "oodbye";
+					playerChoiceInput = "goodbye";
 				}
 				//playerChoiceInput = JOptionPane.showInputDialog(null, "That choice is not valid. Please type \"rock,\" \"paper,\" or \"scissors.\"", "Error", JOptionPane.ERROR_MESSAGE);
 			}
