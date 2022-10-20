@@ -2,6 +2,7 @@
 //10.2.22 add "nice" and "no emotion" options for "pc attitude"
 //10.2.22 JOptionpane is temp just to get the process right - UI to be added later
 //10.2.22 currently line 23 (JOptionPane.showMessageDialog(null, "Thank you!\nNow I can get back to my data.\nGoodbye");) = add options for what Pc wants to get back to
+//after the fifth bad input, it gets stuck on the message
 
 import javax.swing.JOptionPane;
 import java.util.Random;
