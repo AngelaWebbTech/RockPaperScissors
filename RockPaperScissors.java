@@ -2,7 +2,6 @@
 //10.2.22 add "nice" and "no emotion" options for "pc attitude"
 //10.2.22 JOptionpane is temp just to get the process right - UI to be added later
 //10.2.22 currently line 23 (JOptionPane.showMessageDialog(null, "Thank you!\nNow I can get back to my data.\nGoodbye");) = add options for what Pc wants to get back to
-//after the fifth bad input, it gets stuck on the message
 
 import javax.swing.JOptionPane;
 import java.util.Random;
@@ -46,26 +45,26 @@ public class RockPaperScissors {
 					
 				case "2": //play game
 
-						Play go = new Play();
+						Play newGame = new Play();
 						Stats tracker = new Stats();					
 						
 						while (playAgain=='y') {
 						
 							//call Play class methods for playerchoice, systemChoice, and Judge
-							go.setPlayerChoice();
+							newGame.setPlayerChoice();
 							
 							//continue only if number of tries is less than 5
-							if (go.getPlayerChoice()!="goodbye") {
-								go.setSystemChoice();
-								go.Judge(go.getPlayerChoice(), go.getSystemChoice());
+							if (newGame.getPlayerChoice()!="goodbye") {
+								newGame.setSystemChoice();
+								newGame.Judge(newGame.getPlayerChoice(), newGame.getSystemChoice());
 								tracker.setRounds();
-								if (go.getPlayerWin()==1) {tracker.setPlayerWinCount();}
-								if (go.getSystemWin()==1) {tracker.setSystemWinCount();}
-								if (go.getTies()==1) {tracker.setTies();}
+								if (newGame.getPlayerWin()==1) {tracker.setPlayerWinCount();}
+								if (newGame.getSystemWin()==1) {tracker.setSystemWinCount();}
+								if (newGame.getTies()==1) {tracker.setTies();}
 								
 								//announce winner & prompt to play again? (best X out of Y?)
 								//call Judge method from Play class & prompt to "play again?"
-								playAgainUserInput = JOptionPane.showInputDialog(null, go.getWinner()
+								playAgainUserInput = JOptionPane.showInputDialog(null, newGame.getWinner()
 																			+ "\n\nThat makes " + tracker.getPlayerWinCount() + " out of " + tracker.getRounds() + " for you,\n" 
 																			+ "and " + tracker.getSystemWinCount() + " out of " + tracker.getRounds() + " for me,\n"
 																			+ "and " + tracker.getTies() + " out of " + tracker.getRounds() + " ties."
@@ -80,6 +79,7 @@ public class RockPaperScissors {
 							}
 							else
 								playAgain='n';
+								quitNow = "y";
 					}
 				break;
 				

@@ -17,7 +17,7 @@ public class Play {
 			playerInputAttemptCount=1; //reset at beginning of each round
 			
 			//if player does not choose rps, or enters more than one letter, reprompt with funny message			
-			while ((playerChoiceInputChar!='r' && playerChoiceInputChar!='p' && playerChoiceInputChar!='s') && playerInputAttemptCount<6) {
+			while ((playerChoiceInputChar!='r' && playerChoiceInputChar!='p' && playerChoiceInputChar!='s') && playerInputAttemptCount<5) {
 				//1st, 2nd, 3rd time - call badInput(playerChoiceInput, playerInputAttemptCount) function. reprompt
 				if (playerInputAttemptCount<=3) {
 					playerChoiceInput = JOptionPane.showInputDialog(null, badInput(playerChoiceInput, playerInputAttemptCount) 
