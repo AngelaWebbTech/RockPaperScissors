@@ -1,8 +1,6 @@
-//10.2.22 keep the player's reason for disagreeing with the rules in a variable. "pc with attitude" uses it (like verification) when asking if the player wants to play again.
-//10.2.22 add "nice" and "no emotion" options for "pc attitude"
-//10.2.22 JOptionpane is temp just to get the process right - UI to be added later
-//10.2.22 currently line 23 (JOptionPane.showMessageDialog(null, "Thank you!\nNow I can get back to my data.\nGoodbye");) = add options for what Pc wants to get back to
-//after exiting due to 5 bad inputs, the game keeps running (visible in console, but not to user) -- game properly quits when no is chosen during "play again?" part of game
+//10.2.22 keep the player's reason for disagreeing with the rules in a variable. "pc with attitude" uses it sarcastically when asking if the player wants to play again.
+//10.2.22 JOptionpane is temp just to get the process right - make it look better later
+
 
 import javax.swing.JOptionPane;
 import java.util.Random;
@@ -11,8 +9,8 @@ public class RockPaperScissors {
 
 	public static void main(String[] args) {
 		//global variables
-		String quitNow = "n", mainMenuChoice, playAgainUserInput;
-		int welcomeWarning, adminYesNo, verifyPlayAgainUserInput;
+		String quitNow = "n", mainMenuChoice="", playAgainUserInput="";
+		int welcomeWarning=0, adminYesNo=0;
 		char playAgain='y';
 		
 		//welcome screen
@@ -38,85 +36,92 @@ public class RockPaperScissors {
 																+ "5. Do boring administrative stuff."); 
 			//if user clicks OK, game should start. if user clicks CANCEL, game should close
 			
-			switch (mainMenuChoice) {
-			
-				case "1":
+			//user chooses "1. See the rules" from the main menu
+			if (mainMenuChoice.equals("1")) {
 					showRules();
-					break;
+			}//close mainmenuchoice=1
+			
+			//user chooses "2. Play the game" from the main menu
+			else if (mainMenuChoice.equals("2")) {		
+				//open instance of each: Play & Stats classes
+				Play newGame = new Play();
+				Stats tracker = new Stats();					
+				
+				//while user chooses "yes" to "play again?" prompts
+				while (playAgain=='y') {
+				
+					//call setPlayerChoice from Play class
+					newGame.setPlayerChoice();
 					
-				case "2": //play game
-
-					Play newGame = new Play();
-					Stats tracker = new Stats();					
-					
-					while (playAgain=='y') {
-					
-						//call Play class methods for playerchoice, systemChoice, and Judge
-						newGame.setPlayerChoice();
+					//if setPlayerChoice!=end of game, call setSystemChoice & Judge
+					if (newGame.getPlayerChoice()!="goodbye" && newGame.getPlayerChoice()!="exit" && playAgain!='n') {
+						newGame.setSystemChoice();
+						newGame.Judge(newGame.getPlayerChoice(), newGame.getSystemChoice());
+						tracker.setRounds();
+						if (newGame.getPlayerWin()==1) {tracker.setPlayerWinCount();}
+						if (newGame.getSystemWin()==1) {tracker.setSystemWinCount();}
+						if (newGame.getTies()==1) {tracker.setTies();}
 						
-						//continue only if number of tries is less than 5
-						if (newGame.getPlayerChoice()!="goodbye" && playAgain!='n') {
-							newGame.setSystemChoice();
-							newGame.Judge(newGame.getPlayerChoice(), newGame.getSystemChoice());
-							tracker.setRounds();
-							if (newGame.getPlayerWin()==1) {tracker.setPlayerWinCount();}
-							if (newGame.getSystemWin()==1) {tracker.setSystemWinCount();}
-							if (newGame.getTies()==1) {tracker.setTies();}
-							
-							//announce winner & prompt to play again? (best X out of Y?)
-							//call Judge method from Play class & prompt to "play again?"
-							playAgainUserInput = JOptionPane.showInputDialog(null, newGame.getWinner()
-																		+ "\n\nAfter " + tracker.getRounds() + "rounds, we have:\n\n"
-																		+ tracker.getPlayerWinCount() + " wins for you,\n" 
-																		+ tracker.getSystemWinCount() + " wins for me,\n"
-																		+ "and\n"
-																		+ tracker.getTies() + " ties."
-																		+ "\n\nWant to try another round?", "yes");
-							if ((playAgainUserInput.charAt(0)!='y' || playAgainUserInput.charAt(0)!='Y') && playAgainUserInput.length()!=3) {
-								verifyPlayAgainUserInput = JOptionPane.showConfirmDialog(null, "Did you mean to type \"yes\"?, Was that a \"yes\"?", "Was that a yes?", JOptionPane.YES_NO_OPTION);
-								if (verifyPlayAgainUserInput==JOptionPane.YES_OPTION) {playAgainUserInput="yes";}
-								else {playAgainUserInput="no";}
-							}
-							if (playAgainUserInput.charAt(0)=='y' || playAgainUserInput.charAt(0)=='Y') {playAgain='y';}
-							else {playAgain='n';}						
-						}
-						else {
-							playAgain='n';
-							quitNow="y";
-						}
+						//announce winner & prompt to play again? (best X out of Y?)
+						//call getWinner from Play class & prompt to "play again?"
+						playAgainUserInput = JOptionPane.showInputDialog(null, newGame.getWinner()
+																	+ "\n\nAfter " + tracker.getRounds() + "rounds, we have:\n\n"
+																	+ tracker.getPlayerWinCount() + " wins for you,\n" 
+																	+ tracker.getSystemWinCount() + " wins for me,\n"
+																	+ "and\n"
+																	+ tracker.getTies() + " ties."
+																	+ "\n\nWant to try another round?", "yes");
+						//add verification in case of non-alphabet entry by user to playAgainUserInput*************************************************INCOMPLETE SECTION
+						playAgain = playAgainUserInput.charAt(0);	
+					}
+					
+					else if (newGame.getPlayerChoice()=="goodbye") {
+						JOptionPane.showMessageDialog(null, "You are not playing nicely.\nGoodbye.", "Not anymore. No.", JOptionPane.PLAIN_MESSAGE);
+						playAgain = 'n';
+						quitNow = "Y";
+					}
+					else
+						playAgain='n';
 				}
-				break;
-				
-				case "3": //see the stats
-					JOptionPane.showMessageDialog(null, "Game statistics have not been set up yet.\nStats are not being tracked for now.");
-				break;
-				
-				case "4": //quit
+			}//close mainmenuchoice=2
+
+			//if user chose "3. See the stats" from main menu
+			else if (mainMenuChoice.equals("3")) {
+				JOptionPane.showMessageDialog(null, "Game statistics have not been set up yet.\nStats are not being tracked for now.");
+			}	
+
+			//if user chose "4. quit" from main menu
+			else if (mainMenuChoice.equals("4")) {
 					quitNow = "y";
 					JOptionPane.showMessageDialog(null, "OK. We can play more another time. Bye for now!", "Goodbye", JOptionPane.PLAIN_MESSAGE);
-				break;
-				
-				case "5": //boring admin stuff
-					adminYesNo = JOptionPane.showConfirmDialog(null, "Seriously? \n"
-														+ "Did you seriously mean to press 5?\n"
-														+ "I mean, there's a game here to be played,\n"
-														+ "and you would rather do boring administrative stuff?\n"
-														+ "Are you serious?", "huh?", JOptionPane.YES_NO_OPTION);
-					if (adminYesNo == JOptionPane.NO_OPTION) {
-						JOptionPane.showMessageDialog(null, "Yeah, that's what I thought.\n"
-								                            + "Why would anyone want to do administrative stuff\n"
-								                            + "when there's a game ready to play?\n"
-								                            + "Let's have some fun!");
-					}
-					else {JOptionPane.showMessageDialog(null,"Well, you can't because admin functions have not been set up yet.\nSo go play.");}
-				break;
-				
-				default:
-					JOptionPane.showMessageDialog(null, "Something went wrong. Goodbye", "uh oh", JOptionPane.ERROR_MESSAGE);
-				break;
+			}	
+
+			//if user chose "5. boring admin stuff" from main menu
+			else if (mainMenuChoice.equals("5")) {
+				adminYesNo = JOptionPane.showConfirmDialog(null, "Seriously? \n"
+													+ "Did you seriously mean to press 5?\n"
+													+ "I mean, there's a game here to be played,\n"
+													+ "and you would rather do boring administrative stuff?\n"
+													+ "Are you serious?", "huh?", JOptionPane.YES_NO_OPTION);
+				if (adminYesNo == JOptionPane.NO_OPTION) {
+					JOptionPane.showMessageDialog(null, "Yeah, that's what I thought.\n"
+							                            + "Why would anyone want to do administrative stuff\n"
+							                            + "when there's a game ready to play?\n"
+							                            + "Let's have some fun!");
+				}
+				else {JOptionPane.showMessageDialog(null,"Well, you can't because admin functions have not been set up yet.\nSo go play.");}
+			}	
+
+			//if user entered something other than a 1,2,3,4,or 5
+			else {
+				JOptionPane.showMessageDialog(null, "Something went wrong. Goodbye", "uh oh", JOptionPane.ERROR_MESSAGE);
 			}
-					
+
+			//playAgain = 'n'; //****************************************************************************************TESTING PURPOSES ONLY
+			
 		}//close while quitNow.equalsIgnoreCase("n")
+		
+		quitNow="y"; //***********************************************************************************************************TEST WHETHER THIS IS NEEDED ***************
 	}
 
 	
