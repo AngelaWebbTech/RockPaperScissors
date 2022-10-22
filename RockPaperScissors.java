@@ -9,8 +9,8 @@ public class RockPaperScissors {
 
 	public static void main(String[] args) {
 		//global variables
-		String quitNow = "n", mainMenuChoice="", playAgainUserInput="";
-		int welcomeWarning=0, adminYesNo=0;
+		String quitNow = "n", mainMenuChoice="";
+		int playAgainUserInput, welcomeWarning=0, adminYesNo=0;
 		char playAgain='y';
 		
 		//welcome screen
@@ -33,8 +33,16 @@ public class RockPaperScissors {
 																+ "2. Play the game.\n"
 																+ "3. See the stats.\n"
 																+ "4. Quit\n"
-																+ "5. Do boring administrative stuff."); 
-			//if user clicks OK, game should start. if user clicks CANCEL, game should close
+																+ "5. Do boring administrative stuff.");
+			
+			while (!mainMenuChoice.equals("1") && !mainMenuChoice.equals("2") && !mainMenuChoice.equals("3") && !mainMenuChoice.equals("4") && !mainMenuChoice.equals("5")) {
+				mainMenuChoice = JOptionPane.showInputDialog(null, "Please choose a number:\n\n"
+						+ "1. See the rules.\n"
+						+ "2. Play the game.\n"
+						+ "3. See the stats.\n"
+						+ "4. Quit\n"
+						+ "5. Do boring administrative stuff.");				
+			}
 			
 			//user chooses "1. See the rules" from the main menu
 			if (mainMenuChoice.equals("1")) {
@@ -64,15 +72,17 @@ public class RockPaperScissors {
 						
 						//announce winner & prompt to play again? (best X out of Y?)
 						//call getWinner from Play class & prompt to "play again?"
-						playAgainUserInput = JOptionPane.showInputDialog(null, newGame.getWinner()
+						playAgainUserInput = JOptionPane.showConfirmDialog(null, newGame.getWinner()
 																	+ "\n\nAfter " + tracker.getRounds() + "rounds, we have:\n\n"
 																	+ tracker.getPlayerWinCount() + " wins for you,\n" 
 																	+ tracker.getSystemWinCount() + " wins for me,\n"
 																	+ "and\n"
 																	+ tracker.getTies() + " ties."
-																	+ "\n\nWant to try another round?", "yes");
-						//add verification in case of non-alphabet entry by user to playAgainUserInput*************************************************INCOMPLETE SECTION
-						playAgain = playAgainUserInput.charAt(0);	
+																	+ "\n\nWant to try another round?", "again?", JOptionPane.YES_NO_OPTION);
+						
+						//if user presses cancel or the x to close, game will exit to main menu
+						if (playAgainUserInput==JOptionPane.CLOSED_OPTION || playAgainUserInput==JOptionPane.NO_OPTION) {playAgain = 'n';}
+						if (playAgainUserInput==JOptionPane.YES_OPTION) {playAgain = 'y';}
 					}
 					
 					else if (newGame.getPlayerChoice()=="goodbye") {
@@ -109,6 +119,10 @@ public class RockPaperScissors {
 							                            + "when there's a game ready to play?\n"
 							                            + "Let's have some fun!");
 				}
+				//if user presses the x to close, game will exit to main menu
+				else if (adminYesNo==JOptionPane.CLOSED_OPTION) {
+					playAgain = 'n';
+				}
 				else {JOptionPane.showMessageDialog(null,"Well, you can't because admin functions have not been set up yet.\nSo go play.");}
 			}	
 
@@ -116,12 +130,7 @@ public class RockPaperScissors {
 			else {
 				JOptionPane.showMessageDialog(null, "Something went wrong. Goodbye", "uh oh", JOptionPane.ERROR_MESSAGE);
 			}
-
-			//playAgain = 'n'; //****************************************************************************************TESTING PURPOSES ONLY
-			
 		}//close while quitNow.equalsIgnoreCase("n")
-		
-		quitNow="y"; //***********************************************************************************************************TEST WHETHER THIS IS NEEDED ***************
 	}
 
 	
@@ -146,9 +155,9 @@ public class RockPaperScissors {
 					+ "Paper beats Rock.\n\n"
 					+ "If we choose the same, it's a draw.\n\n"
 					+ "Do you understand and accept these rules?", "Rules", JOptionPane.YES_NO_OPTION);
-			if (rulesYesNo == JOptionPane.YES_OPTION) {
+			if (rulesYesNo == JOptionPane.YES_OPTION)
 				JOptionPane.showMessageDialog(null, "Awesome! Let's Play!");
-			}
+			else if (rulesYesNo == JOptionPane.CLOSED_OPTION) {return;}
 			else {
 				JOptionPane.showInputDialog(null, "Why do you not agree?", "Explain Please", JOptionPane.QUESTION_MESSAGE);
 				//show a "thinking screen" for 5 seconds
@@ -156,7 +165,7 @@ public class RockPaperScissors {
 															+ "These rules have existed as long as\n"
 															+ "there have been rocks, paper, and scissors.\n\n"
 															+ "Your reason is rejected.\n"
-															+ "Traditional rules remain.");
+															+ "Traditional rules remain the rules of this game.");
 		}
 	}	
 

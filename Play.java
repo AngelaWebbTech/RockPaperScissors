@@ -32,7 +32,7 @@ public class Play {
 				else if (playerInputAttemptCount==4) {
 					//pc complains, with offer to quit
 					int playOrExit = JOptionPane.showConfirmDialog(null, "You can't be serious.\nYou have to be doing this on purpose.\nWhy do you ask to play a game, and then not play?\n" 
-							    + "I am not one of those computers that endlessly follows pointless commands.\nThis is a game. Do you want to play the game?", "Why?!", 
+							    + "I am not here for this.\nThis is a game. Do you want to play the game?", "Why?!", 
 							    JOptionPane.YES_NO_OPTION);
 					//if user chooses to quit
 					if (playOrExit==JOptionPane.NO_OPTION) {
@@ -55,15 +55,12 @@ public class Play {
 					playerChoiceInputChar = playerChoiceInput.charAt(0);
 				}
 			}
-			if (playerChoiceInputChar=='r') {
+			if (playerChoiceInputChar=='r')
 				playerChoice = "rock";
-			}
-			else if (playerChoiceInputChar=='p') {
+			else if (playerChoiceInputChar=='p')
 				playerChoice = "paper";
-			}
-			else if (playerChoiceInputChar=='s') {
+			else if (playerChoiceInputChar=='s')
 				playerChoice = "scissors";
-			}
 			else if (playerChoiceInputChar=='e')
 				playerChoice = "exit";
 			else
@@ -181,6 +178,7 @@ public class Play {
 			 //if secondTry equals yes, go to rules
 			if (menuOrTryAgain==JOptionPane.YES_OPTION) {
 				RockPaperScissors.showRules();
+				msgPart1 = "rules viewed";
 			}
 			else
 				msgPart1 = ("Ok, then you understand that:\n");
@@ -285,6 +283,8 @@ public class Play {
 			return msgPart1;
 		else if (msgPart1.contains("thisMessageControlsReturnString_DoNotChangeIt"))
 			return "Ok. One more chance. And for the record:\n\n" + msgPart2;
+		else if (msgPart1.contains("rules viewed"))
+			return "";
 		else
 			return msgPart1 + "\n" + msgPart2;
 	}
